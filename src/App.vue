@@ -1,16 +1,30 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <HelloWorld />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, provide, reactive, ref, readonly } from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
     HelloWorld
+  },
+  setup() {
+    const location = ref('North Pole')
+    const geolocation = reactive({
+      longitude: 90,
+      latitude: 135
+    })
+    const updateLocation = () => {
+      location.value = 'South Pole'
+    }
+
+    provide('location', readonly(location))
+    provide('geolocation', readonly(geolocation))
+    provide('updateLocation', updateLocation)
+
   }
 });
 </script>
